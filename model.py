@@ -48,6 +48,18 @@ class FooBarQix:
     >>> foo_bar_qix.transcribe( 41 ) # 41 is not divisible by any of 3, 5 or 7, and none of its digits is 3, 5 or 7.
     '41'
     
-    .. todo:: Implement."""
+    .. note:: Negative numbers won’t raise an error. Instead, they will be converted into their absolute value."""
     
-    return NotImplemented
+    number        = abs( number )
+    transcription = ''
+    
+    for divisor in self.dictionary.keys( ):
+      if number % divisor == 0:
+        transcription += self.dictionary[ divisor ]
+    
+    for digit in str( number ):
+      for divisor in self.dictionary.keys( ):
+        if int( digit ) == divisor:
+          transcription += self.dictionary[ divisor ]
+    
+    return transcription if transcription else str( number )
